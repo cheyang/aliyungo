@@ -1,8 +1,6 @@
 package common
 
-import (
-	"testing"
-)
+import "testing"
 
 func TestLoadEndpointFromFile(t *testing.T) {
 

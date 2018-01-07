@@ -61,6 +61,31 @@ func setProductRegionEndpoint(region Region, serviceCode string, endpoint string
 	}
 }
 
+func NewLocationClientWithSecurityToken(accessKeyId string, accessKeySecret string, securityToken string, regionID Region) *Client {
+	endpoint := os.Getenv("LOCATION_ENDPOINT")
+	if endpoint == "" {
+		endpoint = locationDefaultEndpoint
+	}
+
+	return NewLocationClientWithEndpointAndSecurityToken(endpoint, accessKeyId, accessKeySecret, securityToken, regionID)
+}
+
+func NewLocationClientWithEndpoint(endpoint string, accessKeyId string, accessKeySecret string, regionID Region) *Client {
+	return NewLocationClientWithEndpointAndSecurityToken(endpoint, accessKeyId, accessKeySecret, "", regionID)
+}
+
+func NewLocationClientWithEndpointAndSecurityToken(endpoint string, accessKeyId string, accessKeySecret string, securityToken string, regionID Region) *Client {
+	client := &Client{}
+	client.WithEndpoint(endpoint).
+		WithVersion(locationAPIVersion).
+		WithAccessKeyId(accessKeyId).
+		WithAccessKeySecret(accessKeySecret).
+		WithSecurityToken(securityToken).
+		WithRegionID(regionID).
+		InitClient()
+	return client
+}
+
 func (client *Client) DescribeOpenAPIEndpoint(region Region, serviceCode string) string {
 	if endpoint := getProductRegionEndpoint(region, serviceCode); endpoint != "" {
 		return endpoint

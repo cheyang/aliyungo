@@ -65,7 +65,7 @@ func (client *Client) NewInit(endpoint, version, accessKeyId, accessKeySecret, s
 	client.Init(endpoint, version, accessKeyId, accessKeySecret)
 	client.serviceCode = serviceCode
 	client.regionID = regionID
-	client.setEndpointByLocation(regionID, serviceCode, accessKeyId, accessKeySecret)
+	client.setEndpointByLocation(serviceCode)
 }
 
 // Intialize client object when all properties are ready
@@ -82,7 +82,7 @@ func (client *Client) InitClient() *Client {
 			TLSHandshakeTimeout: time.Duration(handshakeTimeout) * time.Second}
 		client.httpClient = &http.Client{Transport: t}
 	}
-	client.setEndpointByLocation(client.regionID, client.serviceCode, client.AccessKeyId, client.AccessKeySecret)
+	client.setEndpointByLocation(client.serviceCode)
 	return client
 }
 
@@ -92,16 +92,26 @@ func (client *Client) NewInitForAssumeRole(endpoint, version, accessKeyId, acces
 }
 
 //NewClient using location service
-func (client *Client) setEndpointByLocation(region Region, serviceCode, accessKeyId, accessKeySecret string) {
-	locationClient := NewLocationClient(accessKeyId, accessKeySecret)
-	ep := locationClient.DescribeOpenAPIEndpoint(region, serviceCode)
+func (client *Client) setEndpointByLocation(serviceCode string) {
+	// locationClient := NewLocationClient(accessKeyId, accessKeySecret)
+	locationClient := NewLocationClientWithSecurityToken(client.AccessKeyId,
+		client.AccessKeySecret,
+		client.securityToken,
+		client.regionID)
+	// it also requires security token
+	ep := locationClient.DescribeOpenAPIEndpoint(client.regionID, serviceCode)
 	if ep == "" {
-		ep = loadEndpointFromFile(region, serviceCode)
+		ep = loadEndpointFromFile(client.regionID, serviceCode)
 	}
 
 	if ep != "" {
 		client.endpoint = ep
 	}
+}
+
+// Get the API endpoint
+func (client *Client) GetEndpoint() string {
+	return client.endpoint
 }
 
 // Ensure all necessary properties are valid
