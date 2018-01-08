@@ -3,7 +3,7 @@ package ecs
 import (
 	"testing"
 
-	"github.com/cheyang/aliyungo/common"
+	"github.com/denverdino/aliyungo/common"
 	"github.com/denverdino/aliyungo/metadata"
 )
 
