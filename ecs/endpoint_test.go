@@ -3,12 +3,9 @@ package ecs
 import (
 	"testing"
 
+	"github.com/cheyang/aliyungo/common"
 	"github.com/denverdino/aliyungo/metadata"
 )
-
-func TestLoadEndpointFromFile(t *testing.T) {
-
-}
 
 // Run this case in the ECS with RamRole
 func TestECSEndpointWithToekn(t *testing.T) {
@@ -30,10 +27,12 @@ func TestECSEndpointWithToekn(t *testing.T) {
 		t.FailNow()
 	}
 
+	regionID := common.Region(region)
+
 	ecsclient := NewECSClientWithSecurityToken(auth.AccessKeyId,
 		auth.AccessKeySecret,
 		auth.SecurityToken,
-		region)
+		regionID)
 
 	endpoint := ecsclient.GetEndpoint()
 

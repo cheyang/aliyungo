@@ -3,6 +3,7 @@ package slb
 import (
 	"testing"
 
+	"github.com/denverdino/aliyungo/common"
 	"github.com/denverdino/aliyungo/metadata"
 )
 
@@ -26,6 +27,8 @@ func TestSLBEndpointWithToekn(t *testing.T) {
 		t.Errorf("Faile to get regionId due to %v", err)
 		t.FailNow()
 	}
+
+	regionID := common.Region(region)
 
 	slbclient := NewSLBClientWithSecurityToken(auth.AccessKeyId,
 		auth.AccessKeySecret,
