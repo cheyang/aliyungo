@@ -27,9 +27,9 @@ func TestSLBEndpointWithToekn(t *testing.T) {
 		t.FailNow()
 	}
 
-	slbclient := NewSLBClientWithSecurityToken(token.auth.AccessKeyId,
-		token.auth.AccessKeySecret,
-		token.auth.SecurityToken,
+	slbclient := NewSLBClientWithSecurityToken(auth.AccessKeyId,
+		auth.AccessKeySecret,
+		auth.SecurityToken,
 		region)
 
 	endpoint := slbclient.GetEndpoint()

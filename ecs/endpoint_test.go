@@ -30,9 +30,9 @@ func TestECSEndpointWithToekn(t *testing.T) {
 		t.FailNow()
 	}
 
-	ecsclient := NewECSClientWithSecurityToken(token.auth.AccessKeyId,
-		token.auth.AccessKeySecret,
-		token.auth.SecurityToken,
+	ecsclient := NewECSClientWithSecurityToken(auth.AccessKeyId,
+		auth.AccessKeySecret,
+		auth.SecurityToken,
 		region)
 
 	endpoint := ecsclient.GetEndpoint()
