@@ -8,7 +8,7 @@ import (
 )
 
 // Run this case in the ECS with RamRole
-func TestECSEndpointWithToekn(t *testing.T) {
+func TestECSEndpointWithToken(t *testing.T) {
 	m := metadata.NewMetaData(nil)
 	roleName, err := m.RoleName()
 	if err != nil {
@@ -18,12 +18,12 @@ func TestECSEndpointWithToekn(t *testing.T) {
 
 	auth, err := m.RamRoleToken(roleName)
 	if err != nil {
-		t.Errorf("Faile to get ramRole Token due to %v", err)
+		t.Errorf("Failed to get ramRole Token due to %v", err)
 		t.FailNow()
 	}
 	region, err := m.Region()
 	if err != nil {
-		t.Errorf("Faile to get regionId due to %v", err)
+		t.Errorf("Failed to get regionId due to %v", err)
 		t.FailNow()
 	}
 
@@ -39,7 +39,7 @@ func TestECSEndpointWithToekn(t *testing.T) {
 	t.Logf("endpoint: %s", endpoint)
 }
 
-func TestECSEndpointWithOutToekn(t *testing.T) {
+func TestECSEndpointWithOutToken(t *testing.T) {
 	ecsclient := NewECSClientWithSecurityToken(TestAccessKeyId,
 		TestAccessKeySecret,
 		"",

@@ -8,7 +8,7 @@ import (
 )
 
 // Run this case in the ECS with RamRole
-func TestSLBEndpointWithToekn(t *testing.T) {
+func TestSLBEndpointWithToken(t *testing.T) {
 	m := metadata.NewMetaData(nil)
 	roleName, err := m.RoleName()
 	if err != nil {
@@ -41,7 +41,7 @@ func TestSLBEndpointWithToekn(t *testing.T) {
 
 }
 
-func TestSLBEndpointWithOutToekn(t *testing.T) {
+func TestSLBEndpointWithOutToken(t *testing.T) {
 	slbclient := NewSLBClientWithSecurityToken(TestAccessKeyId,
 		TestAccessKeySecret,
 		"",
